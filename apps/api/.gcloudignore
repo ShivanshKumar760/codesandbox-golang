@@ -1,0 +1,5 @@
+.git
+.gitignore
+env.sh
+*.md
+lifecycle.json

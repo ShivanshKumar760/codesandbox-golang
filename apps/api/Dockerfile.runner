@@ -1,0 +1,26 @@
+FROM python:3.12-slim-bookworm
+
+COPY --from=node:22-bookworm-slim /usr/local/bin/node /usr/local/bin/node
+COPY --from=golang:1.26-bookworm /usr/local/go /usr/local/go
+
+
+RUN apt-get update \
+ && apt-get install -y --no-install-recommends ca-certificates libstdc++6 util-linux \
+ && rm -rf /var/lib/apt/lists/* \
+ && python -m venv /opt/venv \
+ && useradd --create-home --uid 10001 runner \
+ && mkdir /opt/gocache && chown runner /opt/gocache
+
+
+COPY runner/requirements.txt /app/requirements.txt
+RUN /opt/venv/bin/pip install --no-cache-dir -r /app/requirements.txt
+COPY runner/runner.py /app/runner.py
+
+USER runner
+COPY --chown=runner runner/warm.go /tmp/warm/main.go
+RUN cd /tmp/warm \
+ && CGO_ENABLED=0 GOCACHE=/opt/gocache GOPROXY=off GOTOOLCHAIN=local \
+    /usr/local/go/bin/go build -o /tmp/warm/prog main.go \
+ && rm -rf /tmp/warm
+
+CMD ["/opt/venv/bin/python", "/app/runner.py"]

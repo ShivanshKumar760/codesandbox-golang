@@ -1,0 +1,55 @@
+node_modules/
+dist/
+.env
+.env.local
+.vercel/
+.terraform/
+*.tfstate
+*.tfstate.*
+terraform.tfvars
+env.sh
+
+# ---------- Secrets (never commit) ----------
+env.sh
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*-key.json
+service-account*.json
+credentials.json
+application_default_credentials.json
+
+# ---------- Go (api/) ----------
+# compiled programs (adjust to whatever you pass to `go build -o`)
+api/app
+api/codeapi
+*.exe
+*.test
+*.out
+*.prof
+coverage.out
+
+# ---------- Node / React / Vite (web/) ----------
+node_modules/
+dist/
+build/
+.vercel/
+.vite/
+*.tsbuildinfo
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# ---------- Logs and coverage ----------
+*.log
+coverage/
+
+# ---------- Editors and operating system ----------
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
