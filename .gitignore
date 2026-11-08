@@ -8,7 +8,7 @@ dist/
 *.tfstate.*
 terraform.tfvars
 env.sh
-
+infra/vercel/.terraform.lock.hcl
 # ---------- Secrets (never commit) ----------
 env.sh
 .env
